@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class LevelUIManager : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class LevelUIManager : MonoBehaviour
 
     [Header("Gameplay UI Component Reference")]
     [SerializeField] private Button punchBtn = null;
+    [SerializeField] private Image enemyBarFG = null;
+    [SerializeField] private TextMeshProUGUI energyAmountTxt = null;
     #endregion
 
     #region MonoBehaviour Functions
@@ -27,6 +30,12 @@ public class LevelUIManager : MonoBehaviour
     public void EnablePunchBtnInteraction(bool value)
     {
         punchBtn.interactable = value;
+    }
+
+    public void UpdateEnergyBarFG(int value)
+    {
+        energyAmountTxt.SetText(((int)(100 * ((float)value / (float)LevelManager.Instance.GetNumberOfPunches_Energy))).ToString() + "%");
+        enemyBarFG.fillAmount = (float)value / (float)LevelManager.Instance.GetNumberOfPunches_Energy;
     }
     #endregion
 

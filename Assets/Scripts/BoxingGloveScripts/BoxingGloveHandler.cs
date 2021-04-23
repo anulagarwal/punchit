@@ -19,6 +19,8 @@ public class BoxingGloveHandler : MonoBehaviour
     public void Punch()
     {
         rb.AddForce(Vector3.forward * forceAmount, ForceMode.Impulse);
+        LevelManager.Instance.GetPunchEnergy--;
+        LevelUIManager.Instance.UpdateEnergyBarFG(LevelManager.Instance.GetPunchEnergy);
     }
     #endregion
 }
