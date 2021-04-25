@@ -10,6 +10,10 @@ public class LevelManager : MonoBehaviour
     [Header("Attributes")]
     [Range(0,200)] [SerializeField] private int numberOfPunches_Energy = 0;
 
+    [Header("Punching Prop Setup")]
+    [SerializeField] private List<GameObject> propPrefabs = new List<GameObject>();
+    [SerializeField] private Transform spawnPoint = null;
+
     private int punchEnergy = 0;
     #endregion
 
@@ -26,6 +30,7 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         punchEnergy = numberOfPunches_Energy;
+        SpawnPunchingProp();
     }
     #endregion
 
@@ -33,5 +38,14 @@ public class LevelManager : MonoBehaviour
     public int GetPunchEnergy { get => punchEnergy; set { punchEnergy = value; } }
 
     public int GetNumberOfPunches_Energy { get => numberOfPunches_Energy; }
+    #endregion
+
+    #region Private Core Functions
+    private void SpawnPunchingProp()
+    {
+        GameObject propObj = propPrefabs[Random.Range(0, propPrefabs.Count)];
+        PropHandler propHandler = propObj.GetComponent<PropHandler>();
+        Instantiate(propObj, spawnPoint.position + propHandler.GetSpawnPositionOffset, Quaternion.Euler(propHandler.GetRotationOffset), spawnPoint);
+    }
     #endregion
 }
